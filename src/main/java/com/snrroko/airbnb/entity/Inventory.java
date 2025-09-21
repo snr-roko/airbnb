@@ -3,8 +3,11 @@ package com.snrroko.airbnb.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -28,7 +31,7 @@ public class Inventory {
     private Room room;
 
     @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
-    private Integer bookedcount;
+    private Integer bookedCount;
 
     @Column(nullable = false)
     private Integer totalCount;
@@ -38,4 +41,11 @@ public class Inventory {
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 }
