@@ -1,5 +1,6 @@
-package com.snrroko.airbnb.entity;
+package com.snrroko.airbnb.entities;
 
+import com.snrroko.airbnb.entities.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,34 +8,29 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-public class Hotel {
-
+@Table(name = "service_user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
+    private String email;
+
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String city;
-
-    @Column(columnDefinition = "TEXT[]")
-    private String[] photos;
-
-    @Column(columnDefinition = "TEXT[]")
-    private String[] amenities;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
     @Column(nullable = false)
-    private Boolean active;
-
-    @Embedded
-    private HotelContactInfo contactInfo;
+    private String password;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -42,6 +38,5 @@ public class Hotel {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 
 }

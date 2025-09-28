@@ -1,4 +1,4 @@
-package com.snrroko.airbnb.entity.enums;
+package com.snrroko.airbnb.entities.enums;
 
 public enum PaymentStatus {
     PENDING,

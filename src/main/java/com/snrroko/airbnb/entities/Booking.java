@@ -1,6 +1,6 @@
-package com.snrroko.airbnb.entity;
+package com.snrroko.airbnb.entities;
 
-import com.snrroko.airbnb.entity.enums.BookingStatus;
+import com.snrroko.airbnb.entities.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

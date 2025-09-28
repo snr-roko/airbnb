@@ -1,6 +1,5 @@
-package com.snrroko.airbnb.entity;
+package com.snrroko.airbnb.entities;
 
-import com.snrroko.airbnb.entity.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,17 +12,29 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class Payment {
+public class Hotel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique = true)
-    private String transactionId;
+    @Column(unique = true, nullable = false)
+    private String name;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PaymentStatus paymentStatus;
+    private String city;
+
+    @Column(columnDefinition = "TEXT[]")
+    private String[] photos;
+
+    @Column(columnDefinition = "TEXT[]")
+    private String[] amenities;
+
+    @Column(nullable = false)
+    private Boolean active;
+
+    @Embedded
+    private HotelContactInfo contactInfo;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -31,4 +42,6 @@ public class Payment {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+
 }

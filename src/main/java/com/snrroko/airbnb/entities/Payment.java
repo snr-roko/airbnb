@@ -1,6 +1,6 @@
-package com.snrroko.airbnb.entity;
+package com.snrroko.airbnb.entities;
 
-import com.snrroko.airbnb.entity.enums.Role;
+import com.snrroko.airbnb.entities.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,29 +8,22 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "service_user")
-public class User {
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @Column(unique = true)
-    private String email;
+    private String transactionId;
 
-    @Column(nullable = false)
-    private String name;
-
-    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
-
     @Column(nullable = false)
-    private String password;
+    private PaymentStatus paymentStatus;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -38,5 +31,4 @@ public class User {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 }

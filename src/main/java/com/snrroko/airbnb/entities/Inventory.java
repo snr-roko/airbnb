@@ -1,4 +1,4 @@
-package com.snrroko.airbnb.entity;
+package com.snrroko.airbnb.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
