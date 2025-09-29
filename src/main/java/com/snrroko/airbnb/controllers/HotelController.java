@@ -32,4 +32,20 @@ public class HotelController {
     public ResponseEntity<HotelResponseDto> addHotel (@RequestBody HotelDto hotelDto) {
         return new ResponseEntity<>(hotelService.createNewHotel(hotelDto), HttpStatus.CREATED);
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<HotelResponseDto> FullUpdateHotel(@PathVariable UUID id, @RequestBody HotelDto hotelDto) {
+        return ResponseEntity.ok(hotelService.fullUpdateHotelById(id, hotelDto));
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<HotelResponseDto> PatchUpdateHotel(@PathVariable UUID id, @RequestBody HotelDto hotelDto) {
+        return ResponseEntity.ok(hotelService.partialUpdateHotelById(id, hotelDto));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deleteHotelById(@PathVariable UUID id)  {
+        hotelService.deleteHotelById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
