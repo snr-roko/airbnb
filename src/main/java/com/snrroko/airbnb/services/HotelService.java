@@ -81,5 +81,19 @@ public class HotelService {
         hotelRepository.deleteById(id);
     }
 
+    @Transactional
+    public HotelResponseDto activateHotelById(UUID id) {
+        Hotel hotel = hotelRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));
+        hotel.setActive(true);
+        return modelMapper.map(hotel, HotelResponseDto.class);
+    }
+
+    @Transactional
+    public HotelResponseDto deactivateHotelById(UUID id) {
+        Hotel hotel = hotelRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Hotel not found"));
+        hotel.setActive(false);
+        return modelMapper.map(hotel, HotelResponseDto.class);
+    }
+
 
 }
