@@ -35,7 +35,7 @@ public class HotelService {
     }
 
     public HotelResponseDto findHotelById(UUID id) {
-        Hotel hotel = hotelRepository.findById(id).orElseThrow( () -> new RuntimeException("Hotel not found"));
+        Hotel hotel = hotelRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Hotel not found"));
         return modelMapper.map(hotel, HotelResponseDto.class);
     }
 
@@ -49,7 +49,7 @@ public class HotelService {
 
     @Transactional
     public HotelResponseDto fullUpdateHotelById(UUID id, HotelDto hotelDto) {
-        Hotel hotel = hotelRepository.findById(id).orElseThrow( () -> new RuntimeException("Hotel not found"));
+        Hotel hotel = hotelRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Hotel not found"));
         Boolean active = hotel.getActive();
         modelMapper.map(hotelDto, hotel);
         hotel.setId(id);
