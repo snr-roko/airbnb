@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 @Slf4j
@@ -31,6 +32,13 @@ public class ExceptionHandler {
         APIError body = new APIError();
         body.setMessage(exception.getMessage());
         return new ResponseEntity<>(body, HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler(NoResourceFoundException.class)
+    private ResponseEntity<APIError> handleServletNoResourceFoundException(NoResourceFoundException exception) {
+        APIError body = new APIError();
+        body.setMessage("Request path can not be found");
+        return new ResponseEntity<>(body, HttpStatus.NOT_IMPLEMENTED);
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)

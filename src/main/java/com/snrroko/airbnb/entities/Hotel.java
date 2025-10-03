@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -32,6 +34,9 @@ public class Hotel {
 
     @Column(nullable = false)
     private Boolean active;
+
+    @OneToMany(mappedBy = "hotel")
+    private Set<Room> rooms = new HashSet<>();
 
     @Embedded
     private HotelContactInfo contactInfo;
