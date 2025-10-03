@@ -1,5 +1,8 @@
 package com.snrroko.airbnb.controllers;
 
+import com.snrroko.airbnb.advices.APISuccess;
+import com.snrroko.airbnb.advices.APISuccessList;
+import com.snrroko.airbnb.advices.SuccessResponseHandler;
 import com.snrroko.airbnb.dto.hotel.HotelDto;
 import com.snrroko.airbnb.dto.hotel.HotelResponseDto;
 import com.snrroko.airbnb.services.HotelService;
@@ -19,33 +22,75 @@ public class HotelController {
     private final HotelService hotelService;
 
     @GetMapping
-    public ResponseEntity<List<HotelResponseDto>> getAllHotels() {
-        return ResponseEntity.ok(hotelService.findAllHotels());
+    public ResponseEntity<APISuccessList<HotelResponseDto>> getAllHotels() {
+        return SuccessResponseHandler.multipleData(
+                HttpStatus.OK,
+                "Hotels retrieved successfully",
+                hotelService.findAllHotels()
+                );
     }
 
    @GetMapping("{id}")
-   public ResponseEntity<HotelResponseDto> getHotelById(@PathVariable UUID id) {
-        return ResponseEntity.ok(hotelService.findHotelById(id));
+   public ResponseEntity<APISuccess<HotelResponseDto>> getHotelById(@PathVariable UUID id) {
+        return SuccessResponseHandler.singleData(
+                HttpStatus.OK,
+                "Hotel retrieved successfully",
+                hotelService.findHotelById(id)
+        );
    }
 
    @PostMapping
-    public ResponseEntity<HotelResponseDto> addHotel (@RequestBody HotelDto hotelDto) {
-        return new ResponseEntity<>(hotelService.createNewHotel(hotelDto), HttpStatus.CREATED);
+    public ResponseEntity<APISuccess<HotelResponseDto>> addHotel (@RequestBody HotelDto hotelDto) {
+        return SuccessResponseHandler.singleData(
+                HttpStatus.CREATED,
+                "Hotel created successfully",
+                hotelService.createNewHotel(hotelDto)
+        );
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<HotelResponseDto> FullUpdateHotel(@PathVariable UUID id, @RequestBody HotelDto hotelDto) {
-        return ResponseEntity.ok(hotelService.fullUpdateHotelById(id, hotelDto));
+    public ResponseEntity<APISuccess<HotelResponseDto>> FullUpdateHotel(@PathVariable UUID id, @RequestBody HotelDto hotelDto) {
+        return SuccessResponseHandler.singleData(
+                HttpStatus.OK,
+                "Hotel updated successfully",
+                hotelService.fullUpdateHotelById(id, hotelDto)
+        );
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<HotelResponseDto> PatchUpdateHotel(@PathVariable UUID id, @RequestBody HotelDto hotelDto) {
-        return ResponseEntity.ok(hotelService.partialUpdateHotelById(id, hotelDto));
+    public ResponseEntity<APISuccess<HotelResponseDto>> PatchUpdateHotel(@PathVariable UUID id, @RequestBody HotelDto hotelDto) {
+        return SuccessResponseHandler.singleData(
+                HttpStatus.OK,
+                "Hotel updated successfully",
+                hotelService.partialUpdateHotelById(id, hotelDto)
+        );
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Object> deleteHotelById(@PathVariable UUID id)  {
+    public ResponseEntity<APISuccessList<Object>> deleteHotelById(@PathVariable UUID id)  {
         hotelService.deleteHotelById(id);
-        return ResponseEntity.noContent().build();
+        return SuccessResponseHandler.multipleData(
+                HttpStatus.OK,
+                "Hotel deleted successfully",
+                List.of()
+        );
+    }
+
+    @PatchMapping("{id}/activate")
+    public ResponseEntity<APISuccess<HotelResponseDto>> activateHotelById(@PathVariable UUID id) {
+        return SuccessResponseHandler.singleData(
+                HttpStatus.OK,
+                "Hotel activated successfully",
+                hotelService.activateHotelById(id)
+        );
+    }
+
+    @PatchMapping("{id}/deactivate")
+    public ResponseEntity<APISuccess<HotelResponseDto>> deactivateHotelById(@PathVariable UUID id) {
+        return SuccessResponseHandler.singleData(
+                HttpStatus.OK,
+                "Hotel deactivated successfully",
+                hotelService.deactivateHotelById(id)
+        );
     }
 }

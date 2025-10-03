@@ -2,8 +2,10 @@ package com.snrroko.airbnb.advices;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class APISuccess<T> {
+public class APISuccessList<T> {
     private String message;
-    private T data;
+    private List<T> data;
 }
