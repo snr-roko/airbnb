@@ -36,6 +36,9 @@ public class Hotel {
     private Boolean active;
 
     @OneToMany(mappedBy = "hotel")
+    private Set<RoomType> roomTypes = new HashSet<>();
+
+    @OneToMany(mappedBy = "hotel")
     private Set<Room> rooms = new HashSet<>();
 
     @Embedded
@@ -47,6 +50,5 @@ public class Hotel {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
-
 
 }
