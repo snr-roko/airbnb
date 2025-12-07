@@ -1,20 +1,20 @@
-package com.snrroko.airbnb.dto.hotel;
+package com.snrroko.airbnb.dto;
 
-import com.snrroko.airbnb.entities.HotelContactInfo;
+import com.snrroko.airbnb.entities.PropertyContactInfo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class HotelResponseDto {
+public class PropertyResponseDto {
     private UUID id;
     private String name;
     private String city;
     private String[] photos;
     private String[] amenities;
     private Boolean active;
-    private HotelContactInfo contactInfo;
+    private PropertyContactInfo contactInfo;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -14,7 +14,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-public class Hotel {
+public class Property {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -35,14 +35,11 @@ public class Hotel {
     @Column(nullable = false)
     private Boolean active;
 
-    @OneToMany(mappedBy = "hotel")
-    private Set<RoomType> roomTypes = new HashSet<>();
-
-    @OneToMany(mappedBy = "hotel")
-    private Set<Room> rooms = new HashSet<>();
+    @OneToMany(mappedBy = "property")
+    private Set<Accommodation> accommodations = new HashSet<>();
 
     @Embedded
-    private HotelContactInfo contactInfo;
+    private PropertyContactInfo contactInfo;
 
     @CreationTimestamp
     @Column(updatable = false)
