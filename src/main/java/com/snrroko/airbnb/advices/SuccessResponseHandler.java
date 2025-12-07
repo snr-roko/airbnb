@@ -31,4 +31,23 @@ public class SuccessResponseHandler {
         payload.setData(data);
         return new ResponseEntity<>(payload, status);
     }
+
+    public static <T> ResponseEntity<APISuccessPaginated<T>> paginatedData(
+            HttpStatus status,
+            String message,
+            List<T> content,
+            Integer count,
+            Integer currentPage
+    ) {
+        PageData<T> pageData = new PageData<>();
+        pageData.setCurrentPage(currentPage);
+        pageData.setCount(count);
+        pageData.setContent(content);
+
+        APISuccessPaginated<T> paginatedPayload = new APISuccessPaginated<>();
+        paginatedPayload.setMessage(message);
+        paginatedPayload.setData(pageData);
+
+        return new ResponseEntity<>(paginatedPayload, status);
+    }
 }
