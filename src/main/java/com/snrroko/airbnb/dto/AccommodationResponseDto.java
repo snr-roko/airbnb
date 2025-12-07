@@ -17,8 +17,6 @@ public class AccommodationResponseDto {
 
     private UUID id;
 
-    private String name;
-
     private String description;
 
     private AccommodationType type;

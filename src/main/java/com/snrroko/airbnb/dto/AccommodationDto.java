@@ -16,9 +16,6 @@ import java.util.UUID;
 @Data
 public class AccommodationDto {
 
-    @NotBlank(message = "name is required")
-    private String name;
-
     @NotBlank(message = "description is required")
     private String description;
 
