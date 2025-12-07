@@ -1,5 +1,6 @@
 package com.snrroko.airbnb.entities;
 
+import com.snrroko.airbnb.entities.enums.BookingMode;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,10 @@ public class Property {
 
     @Column(columnDefinition = "TEXT[]")
     private String[] photos;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private BookingMode bookingMode;
 
     @Column(columnDefinition = "TEXT[]")
     private String[] amenities;
