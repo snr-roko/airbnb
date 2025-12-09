@@ -4,6 +4,7 @@ import com.snrroko.airbnb.dto.AccommodationDto;
 import com.snrroko.airbnb.dto.AccommodationResponseDto;
 import com.snrroko.airbnb.entities.Property;
 import com.snrroko.airbnb.entities.Accommodation;
+import com.snrroko.airbnb.entities.enums.AccommodationStatus;
 import com.snrroko.airbnb.exceptions.ResourceNotFoundException;
 import com.snrroko.airbnb.repositories.PropertyRepository;
 import com.snrroko.airbnb.repositories.AccommodationRepository;
@@ -40,6 +41,7 @@ public class AccommodationService {
         Property property = propertyRepository.findById(propertyId).orElseThrow(() -> new ResourceNotFoundException("Property Not Found"));
         Accommodation accommodationToBeCreated = modelMapper.map(newAccommodation, Accommodation.class);
         accommodationToBeCreated.setProperty(property);
+        accommodationToBeCreated.setStatus(AccommodationStatus.INACTIVE);
         Accommodation accommodationSaved = accommodationRepository.save(accommodationToBeCreated);
         return modelMapper.map(accommodationSaved, AccommodationResponseDto.class);
     }

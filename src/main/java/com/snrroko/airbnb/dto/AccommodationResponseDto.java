@@ -19,7 +19,9 @@ public class AccommodationResponseDto {
 
     private String description;
 
-    private AccommodationType type;
+    private String additionalInformation;
+
+    private String type;
 
     private Integer capacity;
 
@@ -37,7 +39,9 @@ public class AccommodationResponseDto {
 
     private Integer minimumStayInDays;
 
-    private AccommodationStatus status;
+    private Boolean hasAC;
+
+    private String status;
 
     private List<String> amenities;
 

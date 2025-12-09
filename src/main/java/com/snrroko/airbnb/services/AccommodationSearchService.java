@@ -3,6 +3,7 @@ package com.snrroko.airbnb.services;
 import com.snrroko.airbnb.dto.AccommodationResponseDto;
 import com.snrroko.airbnb.dto.AccommodationSearchDto;
 import com.snrroko.airbnb.entities.Accommodation;
+import com.snrroko.airbnb.entities.enums.AccommodationType;
 import com.snrroko.airbnb.repositories.AccommodationRepository;
 import com.snrroko.airbnb.repositories.PropertyRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +28,15 @@ public class AccommodationSearchService {
 
     public Page<AccommodationResponseDto> searchForAccommodations(AccommodationSearchDto accommodationSearchDetails, Integer page) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        AccommodationType accommodationType = null;
+        if (accommodationSearchDetails.getAccommodationType() != null) {
+            accommodationType = AccommodationType.valueOf(accommodationSearchDetails.getAccommodationType());
+        }
         Page<Accommodation> accommodationPage = accommodationRepository
                 .searchForAccommodations(
                         accommodationSearchDetails.getCity(),
                         accommodationSearchDetails.getName(),
-                        String.valueOf(accommodationSearchDetails.getAccommodationType()),
+                        accommodationType,
                         pageable
                         );
 

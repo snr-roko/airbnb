@@ -22,8 +22,11 @@ public class Accommodation {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String additionalInformation;
 
     @ManyToOne
     @JoinColumn(name = "property_id", nullable = false)
@@ -52,6 +55,9 @@ public class Accommodation {
     private Double sizeInSqMeter;
 
     private Integer minimumStayInDays;
+
+    @Column(nullable = false)
+    private Boolean hasAC;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
