@@ -9,6 +9,7 @@ import com.snrroko.airbnb.dto.PropertyDto;
 import com.snrroko.airbnb.dto.PropertyResponseDto;
 import com.snrroko.airbnb.services.AccommodationService;
 import com.snrroko.airbnb.services.PropertyService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ public class PropertyController {
    }
 
    @PostMapping
-    public ResponseEntity<APISuccess<PropertyResponseDto>> addProperty (@RequestBody PropertyDto propertyDto) {
+    public ResponseEntity<APISuccess<PropertyResponseDto>> addProperty (@RequestBody @Valid PropertyDto propertyDto) {
         return SuccessResponseHandler.singleData(
                 HttpStatus.CREATED,
                 "Property created successfully",
@@ -53,7 +54,7 @@ public class PropertyController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<APISuccess<PropertyResponseDto>> FullUpdateProperty(@PathVariable UUID id, @RequestBody PropertyDto propertyDto) {
+    public ResponseEntity<APISuccess<PropertyResponseDto>> FullUpdateProperty(@PathVariable UUID id, @RequestBody @Valid PropertyDto propertyDto) {
         return SuccessResponseHandler.singleData(
                 HttpStatus.OK,
                 "Property updated successfully",
@@ -62,7 +63,7 @@ public class PropertyController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<APISuccess<PropertyResponseDto>> PatchUpdateProperty(@PathVariable UUID id, @RequestBody PropertyDto propertyDto) {
+    public ResponseEntity<APISuccess<PropertyResponseDto>> PatchUpdateProperty(@PathVariable UUID id, @RequestBody @Valid PropertyDto propertyDto) {
         return SuccessResponseHandler.singleData(
                 HttpStatus.OK,
                 "Property updated successfully",
@@ -71,7 +72,7 @@ public class PropertyController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<APISuccessList<Object>> deleteHotelById(@PathVariable UUID id)  {
+    public ResponseEntity<APISuccessList<Object>> deletePropertyById(@PathVariable UUID id)  {
         propertyService.deletePropertyById(id);
         return SuccessResponseHandler.multipleData(
                 HttpStatus.OK,
@@ -81,7 +82,7 @@ public class PropertyController {
     }
 
     @PatchMapping("{id}/activate")
-    public ResponseEntity<APISuccess<PropertyResponseDto>> activateHotelById(@PathVariable UUID id) {
+    public ResponseEntity<APISuccess<PropertyResponseDto>> activatePropertyById(@PathVariable UUID id) {
         return SuccessResponseHandler.singleData(
                 HttpStatus.OK,
                 "Property activated successfully",
@@ -90,7 +91,7 @@ public class PropertyController {
     }
 
     @PatchMapping("{id}/deactivate")
-    public ResponseEntity<APISuccess<PropertyResponseDto>> deactivateHotelById(@PathVariable UUID id) {
+    public ResponseEntity<APISuccess<PropertyResponseDto>> deactivatePropertyById(@PathVariable UUID id) {
         return SuccessResponseHandler.singleData(
                 HttpStatus.OK,
                 "Property deactivated successfully",
@@ -108,7 +109,7 @@ public class PropertyController {
     }
 
     @PostMapping("{propertyId}/accommodations")
-    private ResponseEntity<APISuccess<AccommodationResponseDto>> createRoomType (@PathVariable("propertyId") UUID propertyId, @RequestBody AccommodationDto newAccommodation) {
+    private ResponseEntity<APISuccess<AccommodationResponseDto>> createAccommodation (@PathVariable("propertyId") UUID propertyId, @RequestBody @Valid AccommodationDto newAccommodation) {
         return SuccessResponseHandler.singleData(
                 HttpStatus.CREATED,
                 "Accommodation added successfully",

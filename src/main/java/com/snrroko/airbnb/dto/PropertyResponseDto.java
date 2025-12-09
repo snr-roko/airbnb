@@ -1,6 +1,7 @@
 package com.snrroko.airbnb.dto;
 
 import com.snrroko.airbnb.entities.PropertyContactInfo;
+import com.snrroko.airbnb.entities.enums.BookingMode;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ public class PropertyResponseDto {
     private String[] photos;
     private String[] amenities;
     private Boolean active;
+    private String bookingMode;
     private PropertyContactInfo contactInfo;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
