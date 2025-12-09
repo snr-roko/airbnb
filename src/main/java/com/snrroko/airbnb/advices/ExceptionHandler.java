@@ -2,12 +2,16 @@ package com.snrroko.airbnb.advices;
 
 import com.snrroko.airbnb.exceptions.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import java.util.List;
 
 @RestControllerAdvice
 @Slf4j
@@ -41,10 +45,25 @@ public class ExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_IMPLEMENTED);
     }
 
+    @org.springframework.web.bind.annotation.ExceptionHandler(MethodArgumentNotValidException.class)
+    private ResponseEntity<APIError> handleBadRequests(MethodArgumentNotValidException exception) {
+        APIError body = new APIError();
+        List<String> errors = exception.
+                getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .toList();
+        String message = errors.getFirst();
+        body.setMessage(message);
+        body.setValidationErrors(errors);
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
     private ResponseEntity<APIError> handleException(Exception exception) {
         APIError body = new APIError();
-        body.setMessage(exception.getMessage());
+        body.setMessage(exception.getLocalizedMessage());
         log.error(exception.getClass().getName());
         return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
